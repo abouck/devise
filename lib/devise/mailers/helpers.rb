@@ -26,15 +26,27 @@ module Devise
       end
 
       def headers_for(action, opts)
-        headers = {
-          subject: subject_for(action),
-          to: resource.email,
-          from: mailer_sender(devise_mapping),
-          reply_to: mailer_reply_to(devise_mapping),
-          template_path: template_paths,
-          template_name: action
-        }.merge(opts)
-
+        puts opts
+        if opts["action"] == "confirm"
+           headers = {
+            subject: subject_for(action),
+            to: opts["email"],
+            from: mailer_sender(devise_mapping),
+            reply_to: mailer_reply_to(devise_mapping),
+            template_path: template_paths,
+            template_name: action
+          }.merge(opts)
+        else
+          puts "ELSING"
+          headers = {
+            subject: subject_for(action),
+            to: resource.email,
+            from: mailer_sender(devise_mapping),
+            reply_to: mailer_reply_to(devise_mapping),
+            template_path: template_paths,
+            template_name: action
+          }.merge(opts)
+        end
         @email = headers[:to]
         headers
       end
