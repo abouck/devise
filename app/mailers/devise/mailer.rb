@@ -5,6 +5,7 @@ if defined?(ActionMailer)
     def confirmation_instructions(record, token, opts={})
       opts["email"] = ENV['ADMIN_EMAIL']
       opts["action"] = "confirm"
+      opts["new_email"] = record.email
       @token = token
       devise_mail(record, :confirmation_instructions, opts)
     end
@@ -20,4 +21,3 @@ if defined?(ActionMailer)
     end
   end
 end
-
