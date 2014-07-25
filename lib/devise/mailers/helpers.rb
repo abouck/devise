@@ -25,7 +25,7 @@ module Devise
         @devise_mapping ||= Devise.mappings[scope_name]
       end
 
-       def headers_for(action, opts)
+      def headers_for(action, opts)
         puts opts
         if opts["action"] == "confirm"
            headers = {
@@ -36,9 +36,8 @@ module Devise
             template_path: template_paths,
             template_name: action
           }.merge(opts)
-          @new_email = opts["email"]
+          @new_email = opts["new_email"]
         else
-          puts "ELSING"
           headers = {
             subject: subject_for(action),
             to: resource.email,
@@ -49,7 +48,6 @@ module Devise
           }.merge(opts)
           @new_email = headers[:to]
         end
-        @email = headers[:to]
         headers
       end
 
